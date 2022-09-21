@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="description"
-        content="Certifiable Robot Design Optimization using Differentiable Programming">
-  <meta name="keywords" content="differentiable programming, deisgn optimization">
+        content="Robust Counterexample-guided Optimization for Planning from Differentiable Temporal Logic">
+  <meta name="keywords" content="differentiable programming, deisgn optimization, temporal logic, STL">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Certifiable Robot Design Optimization using Differentiable Programming</title>
+  <title>Robust Counterexample-guided Optimization for Planning from Differentiable Temporal Logic</title>
 
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
         rel="stylesheet">
@@ -53,6 +53,11 @@
             REALM Website
           </a>
         </div>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="https://realm.mit.edu">
+            RSS 2022: Certifiable Robot Design Optimization using Differentiable Programming
+          </a>
+        </div>
         <!-- <div class="navbar-dropdown">
           <a class="navbar-item" href="https://realm.mit.edu">
             TODO: link to any other pages you want
@@ -70,7 +75,7 @@
     <div class="container is-max-desktop">
       <div class="columns is-centered">
         <div class="column has-text-centered">
-          <h1 class="title is-1 publication-title">Certifiable Robot Design Optimization using Differentiable Programming</h1>
+          <h1 class="title is-1 publication-title">Robust Counterexample-guided Optimization for Planning from Differentiable Temporal Logic</h1>
           <div class="is-size-5 publication-authors">
             <span class="author-block">
               <a href="https://dawson.mit.edu">Charles Dawson</a>,</span>
@@ -86,7 +91,7 @@
             <div class="publication-links">
               <!-- PDF Link. -->
               <span class="link-block">
-                <a href="https://arxiv.org/pdf/2204.10935.pdf"
+                <a href="https://arxiv.org/pdf/2203.02038.pdf"
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                       <i class="fas fa-file-pdf"></i>
@@ -95,7 +100,7 @@
                 </a>
               </span>
               <span class="link-block">
-                <a href="https://arxiv.org/abs/2204.10935"
+                <a href="https://arxiv.org/abs/2203.02038"
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                       <i class="ai ai-arxiv"></i>
@@ -105,7 +110,7 @@
               </span>
               <!-- Video Link. -->
               <span class="link-block">
-                <a href="https://youtu.be/EQRKxBm6DfM"
+                <a href="https://example.com"
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                       <i class="fab fa-youtube"></i>
@@ -143,13 +148,31 @@
 
 <section class="hero teaser">
   <div class="container is-max-desktop">
+    <div class="columns is-centered">
+
+      <!-- Train in one environment... -->
+      <div class="column">
+        <div class="content">
+          <img src="./static/images/satellite_missions.png"
+            class="center-image"
+            alt="A satellite rendezvous mission is specified via signal temporal logic, and a robust plan is found using our counterexample guided optimization method."/>
+        </div>
+      </div>
+      <!--/ Train in one environment... -->
+
+      <!-- Generalization. -->
+      <div class="column">
+        <div class="content">
+          <img src="./static/images/sat_mission_2.gif"
+            class="center-image"
+            alt="A simulation of the chaser satellite safely docking with the target satellite by following the planned trajectory."/>
+        </div>
+      </div>
+    </div>
     <div class="hero-body">
-      <img src="./static/images/headline.png"
-        class="center-image"
-        alt="Design problems are specified as differentiable programs, then design parameters are optimized and design performance is tested using extreme value theory."/>
       <h2 class="subtitle has-text-centered">
         <br/>
-        An overview of our framework for robot design optimization and certification. Differentiable programming allows the user to flexibly specify a robot design problem, which can be efficiently optimized using exact gradients and verified using an extreme value statistical analysis.
+        Signal temporal logic (STL) lets us encode complex task specifications for autonomous systems, such as the satellite rendezvous task shown on the left. In this task, the chaser satellite must approach the target, but it must respect a set speed limit when too close to the target and it must spend a minimum amount of time loitering in the observation zone. We encode this mission using STL and then apply our novel robust planner to find a trajectory that satisfies these requirements by combing robust, sample-efficient counterexample-guided optimization with fast automatic differentiation of the simulator and STL semantics.
       </h2>
     </div>
   </div>
@@ -175,10 +198,7 @@
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-            There is a growing need for computational tools to automatically design and verify autonomous systems, especially complex robotic systems involving perception, planning, control, and hardware in the autonomy stack. Differentiable programming has recently emerged as powerful tool for modeling and optimization. However, very few studies have been done to understand how differentiable programming can be used for robust, certifiable end-to-end design optimization. In this paper, we fill this gap by combining differentiable programming for robot design optimization with a novel statistical framework for certifying the robustness of optimized designs. Our framework can conduct end-to-end optimization and robustness certification for robotics systems, enabling simultaneous optimization of navigation, perception, planning, control, and hardware subsystems.
-          </p>
-          <p>
-            Using simulation and hardware experiments, we show how our tool can be used to solve practical problems in robotics. First, we optimize sensor placements for robot navigation (a design with 5 subsystems and 6 tunable parameters) in under 5 minutes to achieve an 8.4x performance improvement compared to the initial design. Second, we solve a multi-agent collaborative manipulation task (3 subsystems and 454 parameters) in under an hour to achieve a 44% performance improvement over the initial design. We find that differentiable programming enables much faster (32% and 20x, respectively for each example) optimization than approximate gradient methods. We certify the robustness of each design and successfully deploy the optimized designs in hardware. An open-source implementation is available <a rel="source_code" href="https://github.com/MIT-REALM/architect">online</a>.
+            Signal temporal logic (STL) provides a powerful, flexible framework for specifying complex autonomy tasks; however, existing methods for planning based on STL specifications have difficulty scaling to long-horizon tasks and are not robust to external disturbances. In this paper, we present an algorithm for finding robust plans that satisfy STL specifications. Our method alternates between local optimization and local falsification, using automatically differentiable temporal logic to iteratively optimize its plan in response to counterexamples found during the falsification process. We benchmark our counterexample-guided planning method against state-of-the-art planning methods on two long-horizon satellite rendezvous missions, showing that our method finds high-quality plans that satisfy STL specifications despite adversarial disturbances. We find that our method consistently finds plans that are robust to adversarial disturbances and requires less than half the time of competing methods. We provide an implementation of our planner <a rel="source_code" href="https://github.com/MIT-REALM/architect">online</a>.
           </p>
         </div>
       </div>
@@ -239,7 +259,7 @@
           <p>
             Other work on this theme from our lab include:
             <ul>
-              <li><a href="https://arxiv.org/abs/2203.02038">Robust Counterexample-guided Optimization for Planning from Differentiable Temporal Logic</a>.</li>
+              <li><a href="https://arxiv.org/abs/2204.10935">Certifiable Robot Design Optimization using Differentiable Programming</a>.</li>
             </ul>
           </p>
         </div>
@@ -253,10 +273,10 @@
 <section class="section" id="BibTeX">
   <div class="container is-max-desktop content">
     <h2 class="title">BibTeX</h2>
-    <pre><code>@article{dawson2022_certifiable_design_optimization,
+    <pre><code>@article{dawson2022_robust_stl_planning,
   author    = {Dawson, Charles and Fan, Chuchu},
-  title     = {Certifiable Robot Design Optimization using Differentiable Programming},
-  journal   = {Robotics: Science and Systems},
+  title     = {Robust Counterexample-guided Optimization for Planning from Differentiable Temporal Logic},
+  journal   = {IROS},
   year      = {2022},
 }
 </code></pre>
